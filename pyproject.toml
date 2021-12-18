@@ -6,6 +6,9 @@ authors = ["Jonatha Daguerre <jonatha@daguerre.com.br>"]
 readme = "README.md"
 homepage = "https://github.com/jonathadv/poetry-playground"
 repository = "https://github.com/jonathadv/poetry-playground"
+packages = [
+    { include = "module" },
+]
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -19,7 +22,6 @@ pytest-cov = "^3.0.0"
 
 [tool.poetry.scripts]
 poetry = 'module.core:say_hi'
-
 
 [tool.black]
 line-length = 100
