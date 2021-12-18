@@ -1,0 +1,62 @@
+[tool.poetry]
+name = "poetry-playground"
+version = "0.1.0"
+description = "A playground for learning Poetry"
+authors = ["Jonatha Daguerre <jonatha@daguerre.com.br>"]
+readme = "README.md"
+homepage = "https://github.com/jonathadv/poetry-playground"
+repository = "https://github.com/jonathadv/poetry-playground"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.dev-dependencies]
+black = "^21.12b0"
+pylint = "^2.12.2"
+taskipy = "^1.9.0"
+pytest = "^6.2.5"
+pytest-cov = "^3.0.0"
+
+[tool.poetry.scripts]
+poetry = 'module.core:say_hi'
+
+
+[tool.black]
+line-length = 100
+target-version = ['py38']
+include = '\.pyi?$'
+extend-exclude = '''
+# A regex preceded with ^/ will apply only to files and directories
+# in the root of the project.
+^/foo.py  # exclude a file named foo.py in the root of the project (in addition to the defaults)
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = """
+-v
+--show-capture=no
+"""
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["module"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 100
+
+[tool.taskipy.tasks]
+format = { cmd = "isort module tests && black module tests", help = "format with isort and black" }
+lint = { cmd = "pylint module tests", help = "confirms code style using pylint" }
+test = { cmd = "pytest", help = "runs all unit tests" }
+"test:cov" = { cmd = "pytest --cov", help = "runs all unit tests" }
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
